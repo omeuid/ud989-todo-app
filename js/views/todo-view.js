@@ -20,6 +20,7 @@ var app = app || {};
 			'click .toggle': 'toggleCompleted',
 			'dblclick label': 'edit',
 			'click .edit-btn': 'edit',
+			'click .priority-btn': 'prioritize',
 			'click .destroy': 'clear',
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
@@ -51,6 +52,7 @@ var app = app || {};
 
 			this.$el.html(this.template(this.model.toJSON()));
 			this.$el.toggleClass('completed', this.model.get('completed'));
+			this.$el.toggleClass('priority', this.model.get('isApriority'));
 			this.toggleVisible();
 			this.$input = this.$('.edit');
 			return this;
@@ -77,6 +79,11 @@ var app = app || {};
 			this.$input.focus();
 		},
 
+		// Toggle the `"isApriority"` state of the model.
+		prioritize: function () {
+			this.model.prioritize();
+		},
+		
 		// Close the `"editing"` mode, saving changes to the todo.
 		close: function () {
 			var value = this.$input.val();
